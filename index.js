@@ -42,9 +42,10 @@ function getYears(array, cbFunc) {
     const teams = cbFunc(array);
     const years = teams.map(item => item.Year);
     return years;
+    //console.log(teams)
 }
-console.log("======Task 3========")
-console.log(getYears(fifaData, getFinals));
+//console.log("======Task 3========")
+//console.log(getYears(fifaData, getFinals));
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 4: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 Use the higher-order function getWinners to do the following:  
@@ -65,8 +66,8 @@ function getWinners(array, cbFunc) {
     }
     return winners;
 }
-console.log("========Task 4==============")
-console.log(getWinners(fifaData, getFinals));
+//console.log("========Task 4==============")
+//console.log(getWinners(fifaData, getFinals));
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 5: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
@@ -80,9 +81,20 @@ Use the higher-order function getWinnersByYear to do the following:
 hint: the strings returned need to exactly match the string in step 4.
  */
 
-function getWinnersByYear(/* code here */) {
-    /* code here */
-}
+function getWinnersByYear(array, cbFunc, cbFunc2, cbFunc3) {
+    const finalGames = cbFunc(array);
+    const finalsYears = cbFunc2(array); //We need the years the finals were played
+    const finalsWinners = cbFunc3(array);// And we need the winners of each year
+    //So I should combine finalsYears and finals Winners into a new array
+    const stringOfWinners = []
+    for (i = 0; i < finalsGames.length; i++) {
+        stringOfWinners.push(finalsYears[i]) && stringOfWinners.push(finalsWinners)
+    }
+    return stringOfWinners;
+ 
+}   
+//console.log('====Task 5=========')
+//console.log(getWinnersByYear(fifaData, getFinals, getYears, getWinners))
 
 
 
@@ -96,9 +108,15 @@ Use the higher order function getAverageGoals to do the following:
  Example of invocation: getAverageGoals(getFinals(fifaData));
 */
 
-function getAverageGoals(/* code here */) {
-   /* code here */
+function getAverageGoals(getFinalsCb) {
+   const finalsGames = getFinalsCb
+   const homeScore = finalsGames.map(item => item["Home Team Goals"])
+   const awayScore = finalsGames.map(item => item["Away Team Goals"])
+   let totalHomeScore = homeScore.reduce((previous, current) => previous + current);
+   let totalAwayScore = awayScore.reduce((previous, current) => previous + current);
+   return ((totalHomeScore + totalAwayScore) / finalsGames.length).toFixed(2);
 }
+console.log(getAverageGoals(getFinals(fifaData)));
 
 
 
