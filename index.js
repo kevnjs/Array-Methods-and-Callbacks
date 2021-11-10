@@ -38,14 +38,14 @@ Use the higher-order function called getYears to do the following:
 2. Receive a callback function getFinals from task 2 
 3. Return an array called years containing all of the years in the getFinals data set*/
 
-function getYears(array, cbFunc) {
-    const teams = cbFunc(array);
+function getYears(array, callback) {
+    const teams = callback(array);
     const years = teams.map(item => item.Year);
     return years;
     //console.log(teams)
 }
 //console.log("======Task 3========")
-//console.log(getYears(fifaData, getFinals));
+console.log(getYears(fifaData, getFinals));
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 4: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 Use the higher-order function getWinners to do the following:  
@@ -78,23 +78,24 @@ Use the higher-order function getWinnersByYear to do the following:
 4. Receive a callback function getWinners from task 4
 5. Return an array of strings that say "In {year}, {country} won the world cup!" 
 
-hint: the strings returned need to exactly match the string in step 4.
+hint: the strings returned need to exactly match the string in step 5.
  */
 
-function getWinnersByYear(array, cbFunc, cbFunc2, cbFunc3) {
-    const finalGames = cbFunc(array);
-    const finalsYears = cbFunc2(array); //We need the years the finals were played
-    const finalsWinners = cbFunc3(array);// And we need the winners of each year
-    //So I should combine finalsYears and finals Winners into a new array
-    const stringOfWinners = []
-    for (i = 0; i < finalsGames.length; i++) {
-        stringOfWinners.push(finalsYears[i]) && stringOfWinners.push(finalsWinners)
+function getWinnersByYear(array, getFinalsCb, getYearsCb, getWinnersCb) {
+    const finalsYears = getYearsCb(array, getFinalsCb);
+    const finalsWinners = getWinnersCb(array, getFinalsCb);
+    const winAndYears = [];
+    const string = []
+    for (let i = 0; i < finalsYears.length; i++) {
+        winAndYears.push({year: finalsYears[i], name: finalsWinners[i]});
     }
-    return stringOfWinners;
- 
-}   
+    for (let i = 0; i < finalsYears.length; i++) {
+        string.push(`In ${winAndYears[i]["year"]}, ${winAndYears[i]["name"]} won the world cup!`)
+    }
+    return string;
+}
 //console.log('====Task 5=========')
-//console.log(getWinnersByYear(fifaData, getFinals, getYears, getWinners))
+console.log(getWinnersByYear(fifaData, getFinals, getYears, getWinners))
 
 
 
